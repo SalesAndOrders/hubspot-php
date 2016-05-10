@@ -20,13 +20,16 @@
         "codeclimate/php-test-reporter": " dev-master@dev"
     },
     "autoload": {
-        "psr-4": {
-            "Fungku\\HubSpot\\": "src/"
-        }
+        "psr-0": {
+            "Fungku\\HubSpot": "src"
+        },
+        "classmap": [
+            "Module.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-          "Fungku\\HubSpot\\Tests\\": "tests/"
+            "Fungku\\HubSpot\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "stable"
