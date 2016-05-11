@@ -102,9 +102,9 @@ class HubSpotService
      * @return mixed
      * @throws HubSpotException
      */
-    public function __call($name, $arguments = null)
+    public function __call($method, $args)
     {
-        $apiClass = $this->getApiClassName($name);
+        $apiClass = $this->getApiClassName($method);
 
         if (! (new \ReflectionClass($apiClass))->isInstantiable()) {
             throw new HubSpotException("Target [$apiClass] is not instantiable.");
