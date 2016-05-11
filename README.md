@@ -32,9 +32,31 @@ composer require "fungku/hubspot-php: dev-master"
 
 ## Quickstart
 
+#### Add config data
+
+Copy contents of hubspot array in module.config.php into your local zf config and add hubspot info
+
+Add as many form guid as you need into config
+
+```php
+'hubspot' => [
+    'hubspot_api_key' => 'hub-spot-api-key',
+    'portal_id' => 1234567,
+    'form_guid' => 'form-guid'
+]
+```
+
 #### Instantiate hubspot service
 
 All following examples assume this step.
+
+From ZF Service Locator
+
+```php
+$hubspot = $serviceLocator->get('Fungku\HubSpot\HubspotService');
+```
+
+OR
 
 *Note:* The HubSpot class checks for a `HUBSPOT_API_KEY` environment variable if you don't include one during instantiation.
 
