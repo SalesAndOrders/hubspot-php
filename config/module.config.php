@@ -1,5 +1,5 @@
 <?php
-namespace Mailing;
+namespace Fungku\HubSpot;
 
 return [
     'hubspot' => [
