@@ -8,9 +8,8 @@
 
 namespace Fungku\HubSpot;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class HubspotServiceFactory
@@ -19,29 +18,26 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class HubspotServiceFactory implements FactoryInterface
 {
     /**
-     * @param ServiceLocatorInterface $serviceLocator
-     * @return \Zend\InputFilter\InputFilterInterface
-     * @throws RuntimeException
+     * @param ContainerInterface $container
+     * @param string $requestedName
+     * @param array|null $options
+     * @return HubSpotService|object
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $serviceManager = $serviceLocator instanceof ServiceLocatorAwareInterface
-            ? $serviceLocator->getServiceLocator()
-            : $serviceLocator;
-
-        return HubSpotService::make($this->getHubspotConfig($serviceManager));
+        return HubSpotService::make($this->getHubspotConfig($container));
     }
 
     /**
-     * @param ServiceLocatorInterface $service
-     * @return string
+     * @param ContainerInterface $container
+     * @return mixed
      */
-    protected function getHubspotConfig(ServiceLocatorInterface $service)
+    protected function getHubspotConfig(ContainerInterface $container)
     {
-        if (!$service->has('Config')) {
+        if (!$container->has('Config')) {
             throw new RuntimeException('Cannot create WizardNewAccountHubspotListener: config');
         }
-        $config = $service->get('Config');
+        $config = $container->get('Config');
 
         if (!isset($config['hubspot']['hubspot_api_key'])) {
             throw new RuntimeException('Cannot create WizardNewAccountHubspotListener: missing config api key');
